@@ -1,3 +1,5 @@
+# Tim Edalatpour 2023-04-27
+#!/usr/bin/env python3
 import datetime
 import time
 import sys
@@ -16,7 +18,6 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect((testIP, 0))
 ipaddr = s.getsockname()[0]
 host = socket.gethostname()
-print ("IP:", ipaddr, " Host:", host)
 
 #color = 0, 255, 16
 color = 0, 255, 0
@@ -81,7 +82,43 @@ def drawImage(text):
     return(image)
 
 
+def scrollMessage(message):
+
+    image = drawImage(message)
+
+#    status = match['status']
+
+#            if status == 'C':
+#                color = 255, 0, 0
+#            elif status == 'S':
+#                color = 0, 255, 0
+#            else:
+#                color = 255, 255, 255
+
+    offset_x = 0
+
+    while offset_x + display_width < image.size[0]:
+
+        for y in range(display_height):
+            for x in range(display_width):
+                hue = (time.time() / 10.0) + (x / float(display_width * 2))
+                #r, g, b = [int(c * 255) for c in hsv_to_rgb(hue, 1.0, 1.0)]
+                r, g, b = color
+                if image.getpixel((x + offset_x, y)) == 255:
+                    unicornhatmini.set_pixel(x, y, r, g, b)
+                else:
+                    unicornhatmini.set_pixel(x, y, 0, 0, 0)
+
+        offset_x += 1
+#        if offset_x + display_width > image.size[0]:
+#            offset_x = 0
+
+        unicornhatmini.show()
+        time.sleep(0.05)
+
+
 rotation = 0
+
 if len(sys.argv) > 1:
     try:
         rotation = int(sys.argv[1])
@@ -97,6 +134,8 @@ print("{}x{}".format(display_width, display_height))
 
 # Do not look at unicornhatmini with remaining eye
 unicornhatmini.set_brightness(0.04)
+
+scrollMessage(ipaddr)
 
 while True:
 
@@ -124,38 +163,10 @@ while True:
                 print(text)
             except BaseException as err:
                 text = err
-            image = drawImage(text)
 
-            status = match['status']
-
-#            if status == 'C':
-#                color = 255, 0, 0
-#            elif status == 'S':
-#                color = 0, 255, 0
-#            else:
-#                color = 255, 255, 255
-
-            offset_x = 0
-
-            while offset_x + display_width < image.size[0]:
-
-                for y in range(display_height):
-                    for x in range(display_width):
-                        hue = (time.time() / 10.0) + (x / float(display_width * 2))
-                        #r, g, b = [int(c * 255) for c in hsv_to_rgb(hue, 1.0, 1.0)]
-                        r, g, b = color
-                        if image.getpixel((x + offset_x, y)) == 255:
-                            unicornhatmini.set_pixel(x, y, r, g, b)
-                        else:
-                            unicornhatmini.set_pixel(x, y, 0, 0, 0)
-
-                offset_x += 1
-    #        if offset_x + display_width > image.size[0]:
-    #            offset_x = 0
-
-                unicornhatmini.show()
-                time.sleep(0.05)
+            scrollMessage(text)
 
         matchIndex = matchIndex + 1
+
         if matchIndex == len(matches):
             matchIndex = 0
