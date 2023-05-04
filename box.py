@@ -79,4 +79,4 @@ while True:
     except BaseException as err:
         text = err
         display.writeLine(text)
-        time.sleep(30)
+        #time.sleep(30)
