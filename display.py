@@ -5,20 +5,31 @@ import sys
 from colorsys import hsv_to_rgb
 
 from PIL import Image, ImageDraw, ImageFont
-from unicornhatmini import UnicornHATMini
+
+unicornhatmini = None
+try:
+    from unicornhatmini import UnicornHATMini
+    unicornhatmini = UnicornHATMini()
+    display_width, display_height = unicornhatmini.get_shape()
+    print("{}x{}".format(display_width, display_height))
+    # Do not look at unicornhatmini with remaining eye
+    unicornhatmini.set_brightness(0.04)
+except ImportError:
+    unicornhatmini = None     
 
 color = 0, 255, 0
-unicornhatmini = UnicornHATMini()
-display_width, display_height = unicornhatmini.get_shape()
-
-print("{}x{}".format(display_width, display_height))
-
-# Do not look at unicornhatmini with remaining eye
-unicornhatmini.set_brightness(0.04)
-
 
 def init(rotation):
-	unicornhatmini.set_rotation(rotation)
+    if(unicornhatmini):
+        unicornhatmini.set_rotation(rotation)
+
+
+def writeLine(text):
+    if(unicornhatmini):
+        scrollMessage(text)
+    else:
+        print(text)
+        time.sleep(5)
 
 
 def drawImage(text):

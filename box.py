@@ -60,7 +60,7 @@ if len(sys.argv) > 1:
 display.init(rotation)
 
 ipaddr = ip.getAddress()
-display.scrollMessage(ipaddr)
+display.writeLine(ipaddr)
 
 while True:
 
@@ -77,8 +77,7 @@ while True:
 
             if 'ResultId' in match:
                 text = getText(match)
-                print(text)
-                display.scrollMessage(text)
+                display.writeLine(text)
 
             matchIndex = matchIndex + 1
 
@@ -87,5 +86,5 @@ while True:
 
     except BaseException as err:
         text = err
-        scrollMessage(text)
+        display.writeLine(text)
         time.sleep(30)
