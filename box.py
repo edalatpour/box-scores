@@ -13,14 +13,6 @@ import display
 def getMatches():
 
     boxId = '7915'
-
-    today = datetime.datetime.now()
-    dateString = today.strftime('%Y-%m-%d')
-
-    if len(sys.argv) > 2:
-        dateString = sys.argv[2]
-    #print(dateString)
-
     response = requests.get("https://api.ussquash.com/resources/res/box_leagues/{0}/results".format(boxId))
     # print(response)
     matches = json.loads(response.text)
