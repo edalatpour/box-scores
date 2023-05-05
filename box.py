@@ -7,8 +7,11 @@ import sys
 import json
 import requests
 import ip
-import display
 
+try:
+    import unicorn as display
+except ImportError:
+    import console as display
 
 def getMatches():
 
