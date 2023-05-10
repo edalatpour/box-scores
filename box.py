@@ -60,8 +60,6 @@ while True:
 
     try:
 
-        matchIndex = 0
-
         matches = getMatches()
 
         for match in matches:
