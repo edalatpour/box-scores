@@ -64,17 +64,6 @@ while True:
 
         matches = getMatches()
 
-        # while matchIndex < len(matches):
-
-        #     match = matches[matchIndex]
-        #     #print(match)
-
-        #     if 'ResultId' in match:
-        #         text = getText(match)
-        #         display.writeLine(text)
-
-        #     matchIndex = matchIndex + 1
-
         for match in matches:
 
             if 'ResultId' in match:
