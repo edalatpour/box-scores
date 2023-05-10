@@ -27,20 +27,19 @@ def getText(match):
 
     text = ''
 
-    if 'ResultId' in match:
-        resultId = match['ResultId']
-        wPlayerName = match['wPlayerName1'].replace('  ',' ')
-        oPlayerName = match['oPlayerName1'].replace('  ',' ')
-        matchStatus = match['status']
-        matchDate = match['MatchDate']
-        score = match['score']
+    resultId = match['ResultId']
+    wPlayerName = match['wPlayerName1'].replace('  ',' ')
+    oPlayerName = match['oPlayerName1'].replace('  ',' ')
+    matchStatus = match['status']
+    matchDate = match['MatchDate']
+    score = match['score']
 
-        if matchStatus == 'C':
-            text = '{0}: {1} def {2} ({3})'.format(matchDate, wPlayerName, oPlayerName, score)
-        else:
-            text = '{0}: {1} vs {2} ({3})'.format(matchDate, wPlayerName, oPlayerName, score)
+    if matchStatus == 'C':
+        text = '{0}: {1} def {2} ({3})'.format(matchDate, wPlayerName, oPlayerName, score)
+    else:
+        text = '{0}: {1} vs {2} ({3})'.format(matchDate, wPlayerName, oPlayerName, score)
 
-        return(text)
+    return(text)
 
 
 rotation = 0
@@ -65,19 +64,22 @@ while True:
 
         matches = getMatches()
 
-        while True:
+        # while matchIndex < len(matches):
 
-            match = matches[matchIndex]
-            #print(match)
+        #     match = matches[matchIndex]
+        #     #print(match)
+
+        #     if 'ResultId' in match:
+        #         text = getText(match)
+        #         display.writeLine(text)
+
+        #     matchIndex = matchIndex + 1
+
+        for match in matches:
 
             if 'ResultId' in match:
                 text = getText(match)
                 display.writeLine(text)
-
-            matchIndex = matchIndex + 1
-
-            if matchIndex == len(matches):
-                matchIndex = 0
 
     except BaseException as err:
         text = err
