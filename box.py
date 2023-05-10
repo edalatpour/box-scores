@@ -40,4 +40,4 @@ while True:
     except BaseException as err:
         text = err
         d.writeLine(text)
-        #time.sleep(30)
+        time.sleep(10)
