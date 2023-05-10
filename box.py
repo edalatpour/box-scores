@@ -4,42 +4,13 @@ import datetime
 import time
 import sys
 
-import json
-import requests
+import clublocker as cl
 import ip
 
 try:
-    import unicorn as display
+    import unicorn as d
 except ImportError:
-    import console as display
-
-def getMatches():
-
-    boxId = '7915'
-    response = requests.get("https://api.ussquash.com/resources/res/box_leagues/{0}/results".format(boxId))
-    # print(response)
-    matches = json.loads(response.text)
-    # print(matches)
-    return(matches)
-
-
-def getText(match):
-
-    text = ''
-
-    resultId = match['ResultId']
-    wPlayerName = match['wPlayerName1'].replace('  ',' ')
-    oPlayerName = match['oPlayerName1'].replace('  ',' ')
-    matchStatus = match['status']
-    matchDate = match['MatchDate']
-    score = match['score']
-
-    if matchStatus == 'C':
-        text = '{0}: {1} def {2} ({3})'.format(matchDate, wPlayerName, oPlayerName, score)
-    else:
-        text = '{0}: {1} vs {2} ({3})'.format(matchDate, wPlayerName, oPlayerName, score)
-
-    return(text)
+    import console as d
 
 
 rotation = 0
@@ -51,24 +22,22 @@ if len(sys.argv) > 1:
         print("Usage: {} <rotation>".format(sys.argv[0]))
         sys.exit(1)
 
-display.init(rotation)
-
 ipaddr = ip.getAddress()
-display.writeLine(ipaddr)
+d.writeLine(ipaddr)
 
 while True:
 
     try:
 
-        matches = getMatches()
+        matches = cl.getMatches()
 
         for match in matches:
 
             if 'ResultId' in match:
-                text = getText(match)
-                display.writeLine(text)
+                text = cl.getText(match)
+                d.writeLine(text)
 
     except BaseException as err:
         text = err
-        display.writeLine(text)
+        d.writeLine(text)
         #time.sleep(30)
