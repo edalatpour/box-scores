@@ -6,7 +6,7 @@ import requests
 
 def getMatches():
 
-    boxId = '7915'
+    boxId = '7999'
     response = requests.get("https://api.ussquash.com/resources/res/box_leagues/{0}/results".format(boxId))
     # print(response)
     matches = json.loads(response.text)
