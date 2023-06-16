@@ -7,7 +7,7 @@ from colorsys import hsv_to_rgb
 from PIL import Image, ImageDraw, ImageFont
 
 try:
-    from unicornhatmini import UnicornHATMini as uhm
+    import unicornhatmini as uhm
     print("unicornHATMini")
 except ImportError:
     from unicorn_emulator import UnicornHATMini as uhm
