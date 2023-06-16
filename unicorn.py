@@ -6,8 +6,14 @@ from colorsys import hsv_to_rgb
 
 from PIL import Image, ImageDraw, ImageFont
 
-from unicornhatmini import UnicornHATMini
-unicornhatmini = UnicornHATMini()
+try:
+    from unicornhatmini import UnicornHATMini as uhm
+    print("unicornHATMini")
+except ImportError:
+    from unicorn_emulator import UnicornHATMini as uhm
+    print("unicorn_emulator")
+
+unicornhatmini = uhm.UnicornHATMini()
 display_width, display_height = unicornhatmini.get_shape()
 print("{}x{}".format(display_width, display_height))
 # Do not look at unicornhatmini with remaining eye

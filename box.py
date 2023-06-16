@@ -9,9 +9,10 @@ import ip
 
 try:
     import unicorn as d
+    print("unicorn")
 except ImportError:
     import console as d
-
+    print("console")
 
 rotation = 0
 
