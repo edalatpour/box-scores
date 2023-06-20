@@ -3,10 +3,24 @@
 import json
 import requests
 
+def getBoxId():
+
+    boxId = 0
+
+    # get latest boxid from DynamoDB table
+    response = requests.get("https://api.ussquash.com/resources/res/box_leagues/list?Status=1&TopRecords=50&clubId=492")
+    # print(response)
+    boxes = json.loads(response.text)
+    # interate over boxIds to find the latest
+    for box in boxes:
+        if box['eventId'] > boxId:
+            boxId = box['eventId']
+
+    return(boxId)
 
 def getMatches():
 
-    boxId = '7999'
+    boxId = getBoxId()
     response = requests.get("https://api.ussquash.com/resources/res/box_leagues/{0}/results".format(boxId))
     # print(response)
     matches = json.loads(response.text)
